@@ -1,9 +1,9 @@
 import React from 'react';
-// import User from '../user';
+import User from './user';
 
 const Users = ({users, ...rest}) => {
 
-  const columnNames = ["Имя", "Качества", "Профессия", "Встретился,раз", "Оценка", ""];
+  const columnNames = ["Имя", "Качества", "Профессия", "Встретился,раз", "Оценка", "Избранное", ""];
 
   const renderColumnNames = () => {
     return columnNames.map((columnNames) => (
@@ -12,51 +12,6 @@ const Users = ({users, ...rest}) => {
       >
         {columnNames}
       </th>
-    ))
-  };
-
-  const getQualityClasses = (color) => {
-
-    let classes = `badge bg-${color} m-2`;
-    return classes;
-  };
-
-  const renderUsers = () => {
-    return users.map((user) => (
-      <tr
-        key={user._id}
-      >
-        <td>
-          {user.name}
-        </td>
-        <td>
-          {user.qualities.map((quality) => {
-            return <span 
-              key={quality._id}
-              className={getQualityClasses(quality.color)}
-            >
-              {quality.name}
-            </span>
-          })}
-        </td>
-        <td>
-          {user.profession.name}
-        </td>
-        <td>
-          {user.completedMeetings}
-        </td>
-        <td>
-          {user.rate}
-        </td>
-        <td>
-          <button
-            className="btn btn-danger btn-sm m-2"
-            onClick={()=>rest.onHandleDelete(user)}
-          >
-            delete
-          </button>
-        </td>
-      </tr>
     ))
   };
 
@@ -69,7 +24,23 @@ const Users = ({users, ...rest}) => {
           </tr>
         </thead>
         <tbody>
-          {renderUsers()}
+          {users.map((user) => (
+            <tr
+              key={user._id} 
+            >
+              <User 
+                {...user}
+              />
+              <td>
+                <button
+                  className="btn btn-danger btn-sm m-2"
+                  onClick={()=>rest.onHandleDelete(user)}
+                >
+                  delete
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </>
