@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 // import Users from './components/users';
-// import SearchStatus from './components/searchStatus';
+import SearchStatus from './components/searchStatus';
 import api from './api';
 
 const App = () => {
@@ -9,12 +9,6 @@ const App = () => {
 
   const handleDelete = (userId) => {
     setUsers(prevState=>prevState.filter(user=>user!==userId));
-  };
-
-  const renderPhrase = (number) => {
-    let message = (number >=2 && number <=4) ? "человека тусанут" : "человек тусанет";
-    
-    return `${number} ${message} с тобой сегодня`;
   };
 
   const renderColumnNames = () => {
@@ -80,11 +74,9 @@ const App = () => {
 
   return (
     <>
-      <span
-        className="badge bg-primary m-2"
-      >
-        {renderPhrase(users.length)}
-      </span>
+      <SearchStatus 
+        length = {users.length}
+      />
       <table className="table">
         <thead>
           <tr>
