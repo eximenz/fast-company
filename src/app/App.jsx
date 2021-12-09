@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import api from '../api';
+// import Users from './components/users';
+// import SearchStatus from './components/searchStatus';
+import api from './api';
 
-const Users = () => {
+const App = () => {
   const [users, setUsers] = useState(api.users.fetchAll());
   const columnNames = ["Имя", "Качества", "Профессия", "Встретился,раз", "Оценка", ""];
 
@@ -97,4 +99,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default App;

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Users from './components/users';
+import App from './app/App.jsx'
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import "bootstrap/dist/css/bootstrap.css";
@@ -8,7 +8,7 @@ import "bootstrap/dist/css/bootstrap.css";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Users />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
