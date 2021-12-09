@@ -1,37 +1,30 @@
 import React from 'react';
-// import Qualitie from "./qualitie";
+import Qualitie from "./qualitie";
 // import BookMark from "./bookmark";
 
-const User = (props) => {
-
-  const getQualityClasses = (color) => {
-    let classes = `badge bg-${color} m-2`;
-    return classes;
-  };
+const User = ({name, qualities, profession, completedMeetings, rate}) => {
 
   return (
     <>
       <td>
-        {props.name}
+        {name}
       </td>
       <td>
-        {props.qualities.map((quality) => {
-          return <span 
+        {qualities.map((quality) => (
+          <Qualitie
             key={quality._id}
-            className={getQualityClasses(quality.color)}
-          >
-            {quality.name}
-          </span>
-        })}
+            {...quality}
+          />
+        ))}
       </td>
       <td>
-        {props.profession.name}
+        {profession.name}
       </td>
       <td>
-        {props.completedMeetings}
+        {completedMeetings}
       </td>
       <td>
-        {props.rate}
+        {rate}
       </td>
       <td>
 
