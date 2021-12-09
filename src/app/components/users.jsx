@@ -1,7 +1,7 @@
 import React from 'react';
 import User from './user';
 
-const Users = ({users, ...rest}) => {
+const Users = ({users, onHandleDelete, onToggle}) => {
 
   const columnNames = ["Имя", "Качества", "Профессия", "Встретился,раз", "Оценка", "Избранное", ""];
 
@@ -30,11 +30,12 @@ const Users = ({users, ...rest}) => {
             >
               <User 
                 {...user}
+                onToggle = {onToggle}
               />
               <td>
                 <button
                   className="btn btn-danger btn-sm m-2"
-                  onClick={()=>rest.onHandleDelete(user)}
+                  onClick={()=>onHandleDelete(user)}
                 >
                   delete
                 </button>

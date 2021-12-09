@@ -1,8 +1,8 @@
 import React from 'react';
 import Qualitie from "./qualitie";
-// import BookMark from "./bookmark";
+import BookMark from "./bookmark";
 
-const User = ({name, qualities, profession, completedMeetings, rate}) => {
+const User = ({name, qualities, profession, completedMeetings, rate, bookmark, onToggle, _id}) => {
 
   return (
     <>
@@ -27,7 +27,11 @@ const User = ({name, qualities, profession, completedMeetings, rate}) => {
         {rate}
       </td>
       <td>
-
+        <BookMark
+          id = {_id}
+          status = {bookmark}
+          onToggle = {onToggle}
+          />
       </td>
     </>
   )
