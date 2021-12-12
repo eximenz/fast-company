@@ -1,0 +1,3 @@
+module.export = {
+  semi: true,
+};

@@ -7,37 +7,34 @@ const App = () => {
   const [users, setUsers] = useState(api.users.fetchAll());
 
   const handleDelete = (userId) => {
-    setUsers(prevState=>prevState.filter(user=>user!==userId));
+    setUsers((prevState) => prevState.filter((user) => user !== userId));
   };
 
   const handleToggleBookMark = (id) => {
-    const toggleBookMarkArray = users.map(user => {
+    const toggleBookMarkArray = users.map((user) => {
       if (user._id === id) {
         user.bookmark = !user.bookmark;
       }
       return user;
-    })
+    });
 
     setUsers(toggleBookMarkArray);
   };
 
   if (users.length === 0) {
-    return <span
-    className="badge bg-danger m-2"
-    >Никто с тобой не тусанет</span>
+    return (
+      <span className='badge bg-danger m-2'>Никто с тобой не тусанет</span>
+    );
   }
 
   return (
     <>
-      <SearchStatus 
-        length = {users.length}
+      <SearchStatus length={users.length} />
+      <Users
+        users={users}
+        onHandleDelete={handleDelete}
+        onToggle={handleToggleBookMark}
       />
-      <Users 
-        users = {users}
-        onHandleDelete = {handleDelete}
-        onToggle = {handleToggleBookMark}
-      />
-      
     </>
   );
 };
