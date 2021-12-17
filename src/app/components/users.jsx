@@ -52,7 +52,7 @@ const Users = ({ users: allUsers, onHandleDelete, onToggle }) => {
   };
 
   const filteredUsers = selectedProf
-    ? allUsers.filter((user) => user.profession === selectedProf)
+    ? allUsers.filter((user) => user.profession._id === selectedProf._id)
     : allUsers;
   const count = filteredUsers.length;
 
