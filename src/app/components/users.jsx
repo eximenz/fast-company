@@ -35,9 +35,6 @@ const Users = ({ users: allUsers, onHandleDelete, onToggle }) => {
       .then((data) =>
         setProfession(
           data
-          // Object.assign(data, {
-          //   allProfession: { name: 'Все профессии' }
-          // })
         )
       );
   }, []);
@@ -54,7 +51,6 @@ const Users = ({ users: allUsers, onHandleDelete, onToggle }) => {
     setCurrentPage(pageIndex);
   };
 
-  // const filteredUsers = selectedProf && selectedProf._id
   const filteredUsers = selectedProf
     ? allUsers.filter((user) => user.profession === selectedProf)
     : allUsers;
@@ -65,8 +61,6 @@ const Users = ({ users: allUsers, onHandleDelete, onToggle }) => {
   const clearFilter = () => {
     setSelectedProf();
   };
-
-  console.log(allUsers);
 
   return (
     <div className='d-flex'>
