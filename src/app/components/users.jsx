@@ -66,10 +66,12 @@ const Users = ({ users: allUsers, onHandleDelete, onToggle }) => {
     setSelectedProf();
   };
 
+  console.log(allUsers);
+
   return (
     <div className='d-flex'>
-      {professions && (
-        <div className="d-flex flex-column flex-shrink-0 p-3">
+      {professions && allUsers.length > 0 && (
+        <div className='d-flex flex-column flex-shrink-0 p-3'>
           <GroupList
             selectedItem={selectedProf}
             items={professions}
@@ -83,7 +85,7 @@ const Users = ({ users: allUsers, onHandleDelete, onToggle }) => {
           </button>
         </div>
       )}
-      <div className="d-flex flex-column">
+      <div className='d-flex flex-column'>
         <SearchStatus length={count} />
         {count > 0 && (
           <table className='table'>
@@ -107,7 +109,7 @@ const Users = ({ users: allUsers, onHandleDelete, onToggle }) => {
             </tbody>
           </table>
         )}
-        <div className="d-flex justify-content-center">
+        <div className='d-flex justify-content-center'>
         <Pagination
           itemsCount={count}
           pageSize={pageSize}

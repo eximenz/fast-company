@@ -20,12 +20,6 @@ const App = () => {
     setUsers(toggleBookMarkArray);
   };
 
-  if (users.length === 0) {
-    return (
-      <span className='badge bg-danger m-2'>Никто с тобой не тусанет</span>
-    );
-  }
-
   return (
     <>
       <Users
