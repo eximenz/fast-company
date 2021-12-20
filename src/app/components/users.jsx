@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { paginate } from '../utils/paginate';
 import Pagination from './pagination';
 import api from '../api';
-// import PropTypes from 'prop-types';
 import GroupList from './groupList';
 import SearchStatus from './searchStatus';
 import UserTable from './usersTable';
@@ -14,7 +13,6 @@ const Users = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState({ path: 'name', order: 'asc' });
   const pageSize = 8;
-
   const [users, setUsers] = useState();
 
   useEffect(() => {
@@ -122,9 +120,5 @@ const Users = () => {
   }
   return 'loading...';
 };
-
-// Users.propTypes = {
-//   users: PropTypes.array.isRequired,
-// };
 
 export default Users;

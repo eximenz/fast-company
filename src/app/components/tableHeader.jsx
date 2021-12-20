@@ -13,11 +13,21 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
     }
   };
 
+  const selectedArrow = (item) => {
+    if (selectedSort.path === item) {
+      if (selectedSort.order === 'asc') {
+        return <i className="bi bi-caret-up-fill"></i>;
+      } else {
+        return <i className="bi bi-caret-down-fill"></i>;
+      }
+    }
+  };
+
   return (
     <thead>
         <tr>
           {Object.keys(columns).map((column) => (
-            <th
+            (<th
               key={column}
               onClick={
                 columns[column].path
@@ -27,9 +37,10 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
               {...{ role: columns[column].path && 'button' }}
               scope='col'
             >
-              {columns[column].name}
+              {columns[column].name} {selectedArrow(columns[column].path)}
             </th>
-          ))}
+            )))
+          }
         </tr>
       </thead>
   );
