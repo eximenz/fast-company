@@ -4,9 +4,8 @@ import api from '../api';
 import PropTypes from 'prop-types';
 import Qualitie from './qualitie';
 
-const UserPage = ({ match }) => {
+const UserPage = ({ id }) => {
   const [userInfo, setUserInfo] = useState();
-  const userId = match.params.userId;
   const history = useHistory();
 
   const handleAllUsers = () => {
@@ -15,7 +14,7 @@ const UserPage = ({ match }) => {
 
   useEffect(() => {
     api.users
-      .getBy(userId)
+      .getBy(id)
       .then((data) =>
         setUserInfo(
           data
@@ -48,7 +47,7 @@ const UserPage = ({ match }) => {
 };
 
 UserPage.propTypes = {
-  match: PropTypes.object.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default UserPage;
