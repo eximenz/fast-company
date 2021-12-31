@@ -4,7 +4,7 @@ import BookMark from './bookmark';
 import QualitiesList from './qualitiesList';
 import Table from './table';
 
-const UserTable = ({ users, onSort, selectedSort, onToggleBookMark, onHandleDelete }) => {
+const UserTable = ({ users, onSort, selectedSort, onToggleBookMark, onDelete }) => {
   const columns = {
     name: { path: 'name', name: 'Имя' },
     qualities: {
@@ -31,7 +31,7 @@ const UserTable = ({ users, onSort, selectedSort, onToggleBookMark, onHandleDele
       component: (user) => (
         <button
             className='btn btn-danger btn-sm m-2'
-            onClick={() => onHandleDelete(user._id)}
+            onClick={() => onDelete(user._id)}
           >
             delete
           </button>
@@ -54,7 +54,7 @@ UserTable.propTypes = {
   onSort: PropTypes.func.isRequired,
   selectedSort: PropTypes.object.isRequired,
   onToggleBookMark: PropTypes.func,
-  onHandleDelete: PropTypes.func
+  onDelete: PropTypes.func
 };
 
 export default UserTable;
