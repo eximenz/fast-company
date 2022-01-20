@@ -1,25 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import api from '../api';
-import PropTypes from 'prop-types';
-import Qualitie from './qualitie';
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import api from "../api";
+import PropTypes from "prop-types";
+import Qualitie from "./qualitie";
 
 const UserPage = ({ id }) => {
   const [userInfo, setUserInfo] = useState();
   const history = useHistory();
 
   const handleAllUsers = () => {
-    history.replace('/users');
+    history.replace("/users");
   };
 
   useEffect(() => {
-    api.users
-      .getBy(id)
-      .then((data) =>
-        setUserInfo(
-          data
-        )
-      );
+    api.users.getBy(id).then((data) => setUserInfo(data));
   }, []);
 
   if (userInfo) {
@@ -35,7 +29,9 @@ const UserPage = ({ id }) => {
         <div>Завершенных встреч: {userInfo.completedMeetings}</div>
         <div>Рейтинг: {userInfo.rate}</div>
         <button
-          onClick={() => { handleAllUsers(); }}
+          onClick={() => {
+            handleAllUsers();
+          }}
         >
           Все пользователи
         </button>
@@ -43,7 +39,7 @@ const UserPage = ({ id }) => {
     );
   }
 
-  return 'loading...';
+  return "loading...";
 };
 
 UserPage.propTypes = {

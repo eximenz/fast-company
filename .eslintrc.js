@@ -14,13 +14,20 @@ module.exports = {
   plugins: ["react"],
   rules: {
     semi: [2, "always"],
-    "space-before-function-paren": ["error", 'never'],
-    "comma-dangle": ["error", {
-      "arrays": "never",
-      "objects": "only-multiline",
-      "imports": "never",
-      "exports": "never",
-      "functions": "never"
-  }]
+    quotes: ["error", "double", { allowTemplateLiterals: true }],
+    "space-before-function-paren": [
+      "error",
+      { anonymous: "always", named: "never", asyncArrow: "always" },
+    ],
+    "comma-dangle": [
+      "error",
+      {
+        arrays: "only-multiline",
+        objects: "only-multiline",
+        imports: "never",
+        exports: "never",
+        functions: "never",
+      },
+    ],
   },
 };

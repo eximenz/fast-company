@@ -1,17 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import TableHeader from './tableHeader';
-import TableBody from './tableBody';
+import React from "react";
+import PropTypes from "prop-types";
+import TableHeader from "./tableHeader";
+import TableBody from "./tableBody";
 // import { Route, Switch } from 'react-router-dom';
 // import UserPage from './userPage';
 
 const Table = ({ onSort, selectedSort, columns, data, children }) => {
   return (
-    <table className='table'>
+    <table className="table">
       {children || (
         <>
-          <TableHeader {...{ onSort, selectedSort, columns }}/>
-          <TableBody {...{ columns, data }}/>
+          <TableHeader {...{ onSort, selectedSort, columns }} />
+          <TableBody {...{ columns, data }} />
           {/* <Switch>
             <Route path='/userPage' component={UserPage} />
           </Switch> */}

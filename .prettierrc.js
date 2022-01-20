@@ -1,3 +1,5 @@
-module.export = {
-  semi: true,
-};
+// module.export = {
+//   singleQuote: true,
+//   jsxSingleQuote: true,
+//   tabWidth: 4,
+// };
