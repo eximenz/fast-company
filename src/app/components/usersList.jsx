@@ -8,7 +8,7 @@ import UserTable from "./usersTable";
 import _ from "lodash";
 import SearchForm from "./searchForm";
 
-const Users = () => {
+const UsersList = () => {
   const [professions, setProfession] = useState();
   const [selectedProf, setSelectedProf] = useState();
   const [currentPage, setCurrentPage] = useState(1);
@@ -131,4 +131,4 @@ const Users = () => {
   return "loading...";
 };
 
-export default Users;
+export default UsersList;
