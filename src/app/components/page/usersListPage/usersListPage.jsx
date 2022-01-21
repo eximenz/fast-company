@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { paginate } from "../utils/paginate";
-import Pagination from "./pagination";
-import api from "../api";
-import GroupList from "./groupList";
-import SearchStatus from "./searchStatus";
-import UserTable from "./usersTable";
+import { paginate } from "../../../utils/paginate";
+import Pagination from "../../common/pagination";
+import api from "../../../api";
+import GroupList from "../../common/groupList";
+import SearchStatus from "../../ui/searchStatus";
+import UserTable from "../../ui/usersTable";
 import _ from "lodash";
-import SearchForm from "./searchForm";
+import SearchForm from "../../common/form/searchForm";
 
-const UsersList = () => {
+const UsersListPage = () => {
   const [professions, setProfession] = useState();
   const [selectedProf, setSelectedProf] = useState();
   const [currentPage, setCurrentPage] = useState(1);
@@ -50,8 +50,8 @@ const UsersList = () => {
   }, [selectedProf]);
 
   const handleProfessionSelect = (item) => {
+    if (valueForFiltrationBySearch !== "") setValueForFiltrationBySearch();
     setSelectedProf(item);
-    setValueForFiltrationBySearch();
   };
 
   const handlePageChange = (pageIndex) => {
@@ -131,4 +131,4 @@ const UsersList = () => {
   return "loading...";
 };
 
-export default UsersList;
+export default UsersListPage;

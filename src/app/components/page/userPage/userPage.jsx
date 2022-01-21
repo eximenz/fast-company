@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import api from "../api";
+import api from "../../../api";
 import PropTypes from "prop-types";
-import Qualitie from "./qualitie";
+import Qualities from "../../ui/qualities";
 
 const UserPage = ({ id }) => {
   const [userInfo, setUserInfo] = useState();
@@ -23,7 +23,7 @@ const UserPage = ({ id }) => {
         <div>Професcия: {userInfo.profession.name}</div>
         <div>
           {userInfo.qualities.map((quality) => (
-            <Qualitie key={quality._id} {...quality} />
+            <Qualities key={quality._id} {...quality} />
           ))}
         </div>
         <div>Завершенных встреч: {userInfo.completedMeetings}</div>
