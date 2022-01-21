@@ -6,6 +6,7 @@ import GroupList from "./groupList";
 import SearchStatus from "./searchStatus";
 import UserTable from "./usersTable";
 import _ from "lodash";
+import SearchForm from "./searchForm";
 
 const Users = () => {
   const [professions, setProfession] = useState();
@@ -14,6 +15,13 @@ const Users = () => {
   const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
   const pageSize = 8;
   const [users, setUsers] = useState();
+  const [valueForFiltrationBySearch, setValueForFiltrationBySearch] =
+    useState();
+
+  const getValueFromSearch = (params) => {
+    setValueForFiltrationBySearch(params);
+    setSelectedProf();
+  };
 
   useEffect(() => {
     api.users.fetchAll().then((data) => setUsers(data));
@@ -30,7 +38,6 @@ const Users = () => {
       }
       return user;
     });
-
     setUsers(toggleBookMarkArray);
   };
 
@@ -44,6 +51,7 @@ const Users = () => {
 
   const handleProfessionSelect = (item) => {
     setSelectedProf(item);
+    setValueForFiltrationBySearch();
   };
 
   const handlePageChange = (pageIndex) => {
@@ -55,9 +63,20 @@ const Users = () => {
   };
 
   if (users) {
-    const filteredUsers = selectedProf
-      ? users.filter((user) => user.profession._id === selectedProf._id)
+    const filteredUsersBySearch = valueForFiltrationBySearch
+      ? users.filter((user) =>
+          user.name
+            .toLowerCase()
+            .includes(valueForFiltrationBySearch.toLowerCase().trim())
+        )
       : users;
+
+    const filteredUsers = selectedProf
+      ? filteredUsersBySearch.filter(
+          (user) => user.profession._id === selectedProf._id
+        )
+      : filteredUsersBySearch;
+
     const count = filteredUsers.length;
     const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order]); // desc
     const userCrop = paginate(sortedUsers, currentPage, pageSize);
@@ -83,6 +102,7 @@ const Users = () => {
           )}
           <div className="col">
             <SearchStatus length={count} />
+            <SearchForm onGetValue={getValueFromSearch} />
             {count > 0 && (
               <div style={{ minHeight: "720px" }}>
                 <UserTable
