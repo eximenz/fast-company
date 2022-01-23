@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import api from "../../../api";
 import PropTypes from "prop-types";
-import Qualities from "../../ui/qualities";
+import Qualitie from "../../ui/qualities/qualitie";
+import { Link } from "react-router-dom";
 
 const UserPage = ({ id }) => {
   const [userInfo, setUserInfo] = useState();
-  const history = useHistory();
-
-  const handleAllUsers = () => {
-    history.replace("/users");
-  };
 
   useEffect(() => {
     api.users.getBy(id).then((data) => setUserInfo(data));
@@ -23,18 +18,14 @@ const UserPage = ({ id }) => {
         <div>Професcия: {userInfo.profession.name}</div>
         <div>
           {userInfo.qualities.map((quality) => (
-            <Qualities key={quality._id} {...quality} />
+            <Qualitie key={quality._id} {...quality} />
           ))}
         </div>
         <div>Завершенных встреч: {userInfo.completedMeetings}</div>
         <div>Рейтинг: {userInfo.rate}</div>
-        <button
-          onClick={() => {
-            handleAllUsers();
-          }}
-        >
-          Все пользователи
-        </button>
+        <Link to={`/users/${userInfo._id}/edit`}>
+          <button className="btn btn-primary">Изменить</button>
+        </Link>
       </>
     );
   }
@@ -43,7 +34,7 @@ const UserPage = ({ id }) => {
 };
 
 UserPage.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.string,
 };
 
 export default UserPage;
