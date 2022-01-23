@@ -101,6 +101,7 @@ const RegisterForm = () => {
         options={professions}
         error={errors.profession}
         label="Выберите вашу проффесию"
+        name="professions"
       />
       <RadioField
         options={[
@@ -116,6 +117,7 @@ const RegisterForm = () => {
       <MultySelectField
         options={qualities}
         onChange={handleChange}
+        defaultValue={data.qualities}
         name="qualities"
         label="Выберите ваши качества"
       />
