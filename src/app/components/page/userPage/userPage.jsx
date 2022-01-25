@@ -8,10 +8,12 @@ const UserPage = ({ id }) => {
   const [userInfo, setUserInfo] = useState();
 
   useEffect(() => {
-    api.users.getBy(id).then((data) => setUserInfo(data));
+    api.users.getById(id).then((data) => setUserInfo(data));
   }, []);
 
   if (userInfo) {
+    console.log(userInfo);
+
     return (
       <>
         <h1>{userInfo.name}</h1>

@@ -101,7 +101,7 @@ const RegisterForm = () => {
         options={professions}
         error={errors.profession}
         label="Выберите вашу проффесию"
-        name="professions"
+        name="profession"
       />
       <RadioField
         options={[

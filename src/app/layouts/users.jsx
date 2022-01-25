@@ -10,7 +10,13 @@ const Users = () => {
 
   return (
     <>
-      {!userId ? <UsersListPage /> : edit ? <Edit /> : <UserPage id={userId} />}
+      {!userId ? (
+        <UsersListPage />
+      ) : edit ? (
+        <Edit id={userId} />
+      ) : (
+        <UserPage id={userId} />
+      )}
     </>
   );
 };

@@ -22,7 +22,7 @@ const SelectField = ({
     !Array.isArray(options) && typeof options === "object"
       ? Object.keys(options).map((optionName) => ({
           name: options[optionName].name,
-          value: options[optionName]._id,
+          _id: options[optionName]._id,
         }))
       : options;
 
@@ -43,7 +43,7 @@ const SelectField = ({
         </option>
         {optionsArray &&
           optionsArray.map((option) => (
-            <option key={option.value} value={option.value}>
+            <option key={option._id} value={option._id}>
               {option.name}
             </option>
           ))}
@@ -57,7 +57,7 @@ SelectField.propTypes = {
   defaultOption: PropTypes.string,
   name: PropTypes.string,
   label: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   onChange: PropTypes.func,
   error: PropTypes.string,
   options: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
