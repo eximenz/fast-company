@@ -7,6 +7,9 @@ export function validator(data, config) {
         if (typeof data === "boolean") {
           statusValidate = !data;
         } else if (typeof data === "object") {
+          // if (data.length === 0) {
+          //   statusValidate === true;
+          // }
           statusValidate = data === "";
         } else {
           statusValidate = data.trim() === "";
@@ -29,6 +32,10 @@ export function validator(data, config) {
       }
       case "min": {
         statusValidate = data.length < config.value;
+        break;
+      }
+      case "noQqual": {
+        statusValidate = data.length === 0;
         break;
       }
 

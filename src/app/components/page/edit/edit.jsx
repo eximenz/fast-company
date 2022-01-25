@@ -3,9 +3,8 @@ import TextField from "../../common/form/textField";
 import { validator } from "../../../utils/validator";
 import api from "../../../api";
 import SelectField from "../../common/form/selectField";
-// import RadioField from "../../common/form/radio.Field";
-// import MultySelectField from "../../common/form/multySelectField";
-// import CheckBoxField from "../../common/form/checkBoxField";
+import RadioField from "../../common/form/radio.Field";
+import MultySelectField from "../../common/form/multySelectField";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 
@@ -18,9 +17,8 @@ const Edit = ({ id }) => {
     profession: "",
     sex: "male",
     qualities: [],
-    licence: false,
   });
-  const [, setQualities] = useState({});
+  const [qualities, setQualities] = useState({});
   const [errors, setErrors] = useState({});
   const [professions, setProfession] = useState();
 
@@ -32,13 +30,17 @@ const Edit = ({ id }) => {
 
   useEffect(() => {
     if (userInfo) {
+      const normaliseQualities = userInfo.qualities.map((quality) => ({
+        label: quality.name,
+        value: quality._id,
+      }));
+
       setData({
         name: userInfo.name,
         email: userInfo.email,
         profession: userInfo.profession._id,
-        sex: "male",
-        qualities: [],
-        licence: false,
+        sex: userInfo.sex,
+        qualities: normaliseQualities,
       });
     }
   }, [userInfo]);
@@ -54,6 +56,14 @@ const Edit = ({ id }) => {
     email: {
       isRequired: { message: "Электронная почта обязательна для заполнения" },
       isEmail: { message: "Email введен неккоректно" },
+    },
+    profession: {
+      isRequired: { message: "Профессия обязательна для заполнения" },
+    },
+    qualities: {
+      noQqual: {
+        message: "Качества обязательны для заполнения",
+      },
     },
   };
 
@@ -71,10 +81,26 @@ const Edit = ({ id }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const profession = Object.values(professions).find((profession) => {
+
+    const updateProfession = Object.values(professions).find((profession) => {
       return profession._id === data.profession;
     });
-    api.users.update(id, { ...data, profession });
+
+    const updateQualities = [];
+
+    Object.values(qualities).forEach((item) => {
+      data.qualities.forEach((qualitie) => {
+        if (qualitie.value === item._id) {
+          updateQualities.push(item);
+        }
+      });
+    });
+
+    api.users.update(id, {
+      ...data,
+      profession: updateProfession,
+      qualities: updateQualities,
+    });
     history.replace(`/users/${id}`);
   };
 
@@ -107,32 +133,25 @@ const Edit = ({ id }) => {
                 label="Выберите вашу проффесию"
                 name="profession"
               />
-              {/* <RadioField
-          options={[
-            { name: "Male", value: "male" },
-            { name: "Female", value: "female" },
-            { name: "Other", value: "other" },
-          ]}
-          value={data.sex}
-          name="sex"
-          onChange={handleChange}
-          label="Выберите ваш пол"
-        />
-        <MultySelectField
-          options={qualities}
-          onChange={handleChange}
-          defaultValue={data.qualities}
-          name="qualities"
-          label="Выберите ваши качества"
-        />
-        <CheckBoxField
-          value={data.licence}
-          onChange={handleChange}
-          name="licence"
-          error={errors.licence}
-        >
-          Подтвердить <a>лицензионное соглащение</a>
-        </CheckBoxField> */}
+              <RadioField
+                options={[
+                  { name: "Male", value: "male" },
+                  { name: "Female", value: "female" },
+                  { name: "Other", value: "other" },
+                ]}
+                value={data.sex}
+                name="sex"
+                onChange={handleChange}
+                label="Выберите ваш пол"
+              />
+              <MultySelectField
+                options={qualities}
+                onChange={handleChange}
+                value={data.qualities}
+                name="qualities"
+                label="Выберите ваши качества"
+                error={errors.qualities}
+              />
               <button
                 type="submit"
                 disabled={!isValid}
