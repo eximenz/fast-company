@@ -12,8 +12,6 @@ const UserPage = ({ id }) => {
   }, []);
 
   if (userInfo) {
-    console.log(userInfo);
-
     return (
       <>
         <h1>{userInfo.name}</h1>

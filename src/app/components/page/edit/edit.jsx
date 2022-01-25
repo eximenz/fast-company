@@ -32,11 +32,10 @@ const Edit = ({ id }) => {
 
   useEffect(() => {
     if (userInfo) {
-      // console.log(userInfo.profession.name);
       setData({
         name: userInfo.name,
         email: userInfo.email,
-        profession: userInfo.profession,
+        profession: userInfo.profession._id,
         sex: "male",
         qualities: [],
         licence: false,
@@ -45,32 +44,7 @@ const Edit = ({ id }) => {
   }, [userInfo]);
 
   const handleChange = (target) => {
-    // else {
-    //   setData((prevState) => ({ ...prevState, [target.name]: target.value }));
-    // }
     setData((prevState) => ({ ...prevState, [target.name]: target.value }));
-    // if (target.name === "profession") {
-    //   Object.values(professions).find((profession) => {
-    //     return profession._id === target.value;
-    //   });
-    //   //  {
-    //   setData((prevState) => ({
-    //     ...prevState,
-    //     [target.name]: professions,
-    //   }));
-    //   console.log(professions);
-
-    // }
-  };
-
-  const handleProfessionChange = ({ value }) => {
-    const profession = Object.values(professions).find((prof) => {
-      return value === prof._id;
-    });
-    if (profession === undefined) {
-      return;
-    }
-    setData({ ...data, profession });
   };
 
   const validatorConfig = {
@@ -81,15 +55,6 @@ const Edit = ({ id }) => {
       isRequired: { message: "Электронная почта обязательна для заполнения" },
       isEmail: { message: "Email введен неккоректно" },
     },
-    profession: {
-      isRequired: { message: "Обязательно выберите вашу профессию" },
-    },
-    // licence: {
-    //   isRequired: {
-    //     message:
-    //       "Вы не можете использовать наш сервис без лицензионного соглашения",
-    //   },
-    // },
   };
 
   useEffect(() => {
@@ -106,12 +71,11 @@ const Edit = ({ id }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    api.users.update(id, data).then((user) => {
-      setData(user);
-      history.replace(`/users/${id}`);
+    const profession = Object.values(professions).find((profession) => {
+      return profession._id === data.profession;
     });
-    // api.users.update(id, data);
-    // history.replace(`/users/${id}`);
+    api.users.update(id, { ...data, profession });
+    history.replace(`/users/${id}`);
   };
 
   if (userInfo) {
@@ -135,7 +99,7 @@ const Edit = ({ id }) => {
                 error={errors.email}
               />
               <SelectField
-                onChange={handleProfessionChange}
+                onChange={handleChange}
                 value={data.profession}
                 defaultOption={"Choose..."}
                 options={professions}
