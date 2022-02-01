@@ -14,7 +14,6 @@ const UserPage = ({ id }) => {
   }, []);
 
   if (userInfo) {
-    console.log(userInfo);
     return (
       <>
         <div className="container">
