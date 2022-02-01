@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import api from "../../../api";
 import PropTypes from "prop-types";
 import UserCard from "../../ui/userCard";
+import QualitiesCard from "../../ui/qualitiesCard";
 
 const UserPage = ({ id }) => {
   const [userInfo, setUserInfo] = useState();
@@ -17,6 +18,7 @@ const UserPage = ({ id }) => {
           <div className="row gutters-sm">
             <div className="col-md-4 mb-3">
               <UserCard user={userInfo} />
+              <QualitiesCard data={userInfo.qualities} />
             </div>
             <div className="col-md-8"></div>
           </div>
