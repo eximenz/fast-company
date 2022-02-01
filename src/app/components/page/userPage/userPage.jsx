@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import api from "../../../api";
 import PropTypes from "prop-types";
-import Qualitie from "../../ui/qualities/qualitie";
-import { Link } from "react-router-dom";
+import UserCard from "../../ui/userCard";
 
 const UserPage = ({ id }) => {
   const [userInfo, setUserInfo] = useState();
@@ -14,18 +13,14 @@ const UserPage = ({ id }) => {
   if (userInfo) {
     return (
       <>
-        <h1>{userInfo.name}</h1>
-        <div>Професcия: {userInfo.profession.name}</div>
-        <div>
-          {userInfo.qualities.map((quality) => (
-            <Qualitie key={quality._id} {...quality} />
-          ))}
+        <div className="contai">
+          <div className="row gutters-sm">
+            <div className="col-md-4 mb-3">
+              <UserCard user={userInfo} />
+            </div>
+            <div className="col-md-8"></div>
+          </div>
         </div>
-        <div>Завершенных встреч: {userInfo.completedMeetings}</div>
-        <div>Рейтинг: {userInfo.rate}</div>
-        <Link to={`/users/${userInfo._id}/edit`}>
-          <button className="btn btn-primary">Изменить</button>
-        </Link>
       </>
     );
   }
