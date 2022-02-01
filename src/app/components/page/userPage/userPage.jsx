@@ -3,6 +3,7 @@ import api from "../../../api";
 import PropTypes from "prop-types";
 import UserCard from "../../ui/userCard";
 import QualitiesCard from "../../ui/qualitiesCard";
+import MeetingsCard from "../../ui/meetingsCard";
 
 const UserPage = ({ id }) => {
   const [userInfo, setUserInfo] = useState();
@@ -12,6 +13,7 @@ const UserPage = ({ id }) => {
   }, []);
 
   if (userInfo) {
+    console.log(userInfo);
     return (
       <>
         <div className="contai">
@@ -19,6 +21,7 @@ const UserPage = ({ id }) => {
             <div className="col-md-4 mb-3">
               <UserCard user={userInfo} />
               <QualitiesCard data={userInfo.qualities} />
+              <MeetingsCard value={userInfo.completedMeetings} />
             </div>
             <div className="col-md-8"></div>
           </div>
