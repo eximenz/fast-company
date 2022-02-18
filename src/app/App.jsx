@@ -5,17 +5,20 @@ import Main from "./layouts/main";
 import Login from "./layouts/login";
 import Users from "./layouts/users";
 import { ToastContainer } from "react-toastify";
+import { ProfessionProvider } from "./hooks/useProfessions";
 
 const App = () => {
   return (
     <>
       <NavBar />
       <Switch>
-        <Route path="/login/:type?" component={Login} />
-        <Route path="/users/:userId?/:edit?" component={Users} />
+        <ProfessionProvider>
+          <Route path="/login/:type?" component={Login} />
+          <Route path="/users/:userId?/:edit?" component={Users} />
+        </ProfessionProvider>
         <Route path="/" component={Main} />
       </Switch>
-      <ToastContainer/>
+      <ToastContainer />
     </>
   );
 };

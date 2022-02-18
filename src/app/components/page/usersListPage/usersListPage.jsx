@@ -18,7 +18,6 @@ const UsersListPage = () => {
   const [valueForFiltrationBySearch, setValueForFiltrationBySearch] =
     useState();
   const { users } = useUser();
-  console.log(users);
 
   const getValueFromSearch = (params) => {
     setValueForFiltrationBySearch(params);
