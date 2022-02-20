@@ -55,7 +55,9 @@ export const QualitiesProvider = ({ children }) => {
   }
 
   return (
-    <QualitiesContext.Provider value={{ isLoading, getUserQualities }}>
+    <QualitiesContext.Provider
+      value={{ isLoading, getUserQualities, qualities }}
+    >
       {children}
     </QualitiesContext.Provider>
   );
