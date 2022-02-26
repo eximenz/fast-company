@@ -3,22 +3,20 @@ import PropTypes from "prop-types";
 import Quality from "./quality";
 import { useQualities } from "../../../hooks/useQualities";
 
-const QualitiesList = ({ userQualities }) => {
-  const { isLoading, getUserQualities } = useQualities();
-  const useryQualitiesArray = getUserQualities(userQualities);
-  if (!isLoading) {
+const QualitiesList = ({ qualities }) => {
+    const { isLoading } = useQualities();
+    if (isLoading) return "Loading...";
     return (
-      <>
-        {useryQualitiesArray.map((quality) => (
-          <Quality key={quality._id} {...quality} />
-        ))}
-      </>
+        <>
+            {qualities.map((qual) => (
+                <Quality key={qual} id={qual} />
+            ))}
+        </>
     );
-  } else return "Loading ...";
 };
 
 QualitiesList.propTypes = {
-  userQualities: PropTypes.array.isRequired,
+    qualities: PropTypes.array
 };
 
 export default QualitiesList;
