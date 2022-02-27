@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { validator } from "../../../utils/validator";
 import TextField from "../../common/form/textField";
 import SelectField from "../../common/form/selectField";
@@ -9,12 +9,12 @@ import BackHistoryButton from "../../common/backButton";
 import { useQualities } from "../../../hooks/useQualities";
 import { useProfessions } from "../../../hooks/useProfession";
 import { useUser } from "../../../hooks/useUsers";
-// import { useAuth } from "../../../hooks/useAuth";
+import { useAuth } from "../../../hooks/useAuth";
 const EditUserPage = () => {
     const { userId } = useParams();
-    // const { currentUser } = useAuth();
+    const { updateCurrentUser, currentUser } = useAuth();
     const [isLoading, setIsLoading] = useState(false);
-    // const history = useHistory();
+    const history = useHistory();
     const [data, setData] = useState({
         name: "",
         email: "",
@@ -36,24 +36,6 @@ const EditUserPage = () => {
     const [errors, setErrors] = useState({});
     const { getUserById } = useUser();
 
-    // const getProfessionById = (id) => {
-    //     for (const prof in professions) {
-    //         const profData = professions[prof];
-    //         if (profData._id === id) return profData;
-    //     }
-    // };
-    // const getQualities = (elements) => {
-    //     const qualitiesArray = [];
-    //     for (const elem of elements) {
-    //         for (const quality in qualities) {
-    //             if (elem.value === qualities[quality]._id) {
-    //                 qualitiesArray.push(qualities[quality]);
-    //             }
-    //         }
-    //     }
-    //     return qualitiesArray;
-    // };
-
     const transformData = (useData) => {
         const userQual = [];
         qualitiesList.forEach((qual) => {
@@ -65,6 +47,12 @@ const EditUserPage = () => {
         });
         return userQual;
     };
+
+    useEffect(() => {
+        if (currentUser._id !== userId) {
+            history.replace(`/users/${currentUser._id}/edit`);
+        }
+    }, [currentUser, userId]);
 
     useEffect(() => {
         try {
@@ -128,19 +116,16 @@ const EditUserPage = () => {
     };
     const isValid = Object.keys(errors).length === 0;
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
-        // const { profession, qualities } = data;
-        // api.users
-        //     .update(userId, {
-        //         ...data,
-        //         profession: getProfessionById(profession),
-        //         qualities: getQualities(qualities)
-        //     })
-        //     .then((data) => history.push(`/users/${data._id}`));
-        console.log(data);
+        const updateData = {
+            ...data,
+            qualities: data.qualities.map((q) => q.value)
+        };
+        await updateCurrentUser(updateData);
+        history.push(`/users/${userId}`);
     };
 
     return (
