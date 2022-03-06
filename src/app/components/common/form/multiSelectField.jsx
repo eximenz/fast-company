@@ -44,7 +44,6 @@ const MultiSelectField = ({
 MultiSelectField.propTypes = {
     options: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     error: PropTypes.string,
-
     onChange: PropTypes.func,
     name: PropTypes.string,
     label: PropTypes.string,
