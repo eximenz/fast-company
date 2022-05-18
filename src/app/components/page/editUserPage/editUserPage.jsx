@@ -6,16 +6,29 @@ import SelectField from "../../common/form/selectField";
 import RadioField from "../../common/form/radioField";
 import MultiSelectField from "../../common/form/multiSelectField";
 import BackHistoryButton from "../../common/backButton";
-import { useAuth } from "../../../hooks/useAuth";
-import { useQualities } from "../../../hooks/useQualities";
 import { useProfessions } from "../../../hooks/useProfession";
-
+import { useUser } from "../../../hooks/useUsers";
+import { useAuth } from "../../../hooks/useAuth";
+import { useSelector } from "react-redux";
+import {
+    getQualities,
+    getQualitiesLoadingStatus
+} from "../../../store/qualities";
 const EditUserPage = () => {
+    const { userId } = useParams();
+    const { updateCurrentUser, currentUser } = useAuth();
+    const [isLoading, setIsLoading] = useState(false);
     const history = useHistory();
-    const [isLoading, setIsLoading] = useState(true);
-    const [data, setData] = useState();
-    const { currentUser, updateUserData } = useAuth();
-    const { qualities, isLoading: qualitiesLoading } = useQualities();
+    const [data, setData] = useState({
+        name: "",
+        email: "",
+        profession: "",
+        sex: "",
+        qualities: []
+    });
+
+    const qualities = useSelector(getQualities());
+    const qualitiesLoading = useSelector(getQualitiesLoadingStatus());
     const qualitiesList = qualities.map((q) => ({
         label: q.name,
         value: q._id
@@ -109,7 +122,7 @@ const EditUserPage = () => {
             <BackHistoryButton />
             <div className="row">
                 <div className="col-md-6 offset-md-3 shadow p-4">
-                    {!isLoading && Object.keys(professions).length > 0 ? (
+                    {!isLoading && !qualitiesLoading ? (
                         <form onSubmit={handleSubmit}>
                             <TextField
                                 label="Имя"
