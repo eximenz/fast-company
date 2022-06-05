@@ -6,27 +6,19 @@ import SelectField from "../../common/form/selectField";
 import RadioField from "../../common/form/radioField";
 import MultiSelectField from "../../common/form/multiSelectField";
 import BackHistoryButton from "../../common/backButton";
-import { useProfessions } from "../../../hooks/useProfession";
-import { useUser } from "../../../hooks/useUsers";
 import { useAuth } from "../../../hooks/useAuth";
+import { useProfessions } from "../../../hooks/useProfession";
 import { useSelector } from "react-redux";
 import {
     getQualities,
     getQualitiesLoadingStatus
 } from "../../../store/qualities";
-const EditUserPage = () => {
-    const { userId } = useParams();
-    const { updateCurrentUser, currentUser } = useAuth();
-    const [isLoading, setIsLoading] = useState(false);
-    const history = useHistory();
-    const [data, setData] = useState({
-        name: "",
-        email: "",
-        profession: "",
-        sex: "",
-        qualities: []
-    });
 
+const EditUserPage = () => {
+    const history = useHistory();
+    const [isLoading, setIsLoading] = useState(true);
+    const [data, setData] = useState();
+    const { currentUser, updateUserData } = useAuth();
     const qualities = useSelector(getQualities());
     const qualitiesLoading = useSelector(getQualitiesLoadingStatus());
     const qualitiesList = qualities.map((q) => ({
@@ -102,9 +94,11 @@ const EditUserPage = () => {
             isRequired: {
                 message: "Качества обязательны для заполнения"
             }
-          }
+        }
     };
-    useEffect(() => validate(), [data]);
+    useEffect(() => {
+        validate();
+    }, [data]);
     const handleChange = (target) => {
         setData((prevState) => ({
             ...prevState,
@@ -122,7 +116,7 @@ const EditUserPage = () => {
             <BackHistoryButton />
             <div className="row">
                 <div className="col-md-6 offset-md-3 shadow p-4">
-                    {!isLoading && !qualitiesLoading ? (
+                    {!isLoading && Object.keys(professions).length > 0 ? (
                         <form onSubmit={handleSubmit}>
                             <TextField
                                 label="Имя"
