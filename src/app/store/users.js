@@ -12,7 +12,8 @@ const usersSlice = createSlice({
         isLoading: true,
         error: null,
         auth: null,
-        isLoggedIn: false
+        isLoggedIn: false,
+        dataLoaded: false
     },
     reducers: {
         usersRequested: (state) => {
@@ -20,6 +21,7 @@ const usersSlice = createSlice({
         },
         usersReceived: (state, action) => {
             state.entities = action.payload;
+            state.dataLoaded = true;
             state.isLoading = false;
         },
         usersRequestFailed: (state, action) => {
@@ -27,7 +29,8 @@ const usersSlice = createSlice({
             state.isLoading = false;
         },
         authRequestSuccess: (state, action) => {
-            state.auth = { ...action.payload, isLoggedIn: true };
+            state.auth = action.payload;
+            state.isLoggedIn = true;
         },
         authRequestFailed: (state, action) => {
             state.error = action.payload;
@@ -54,6 +57,21 @@ const {
 const authRequested = createAction("users/authRequested");
 const userCreateRequested = createAction("users/userCreateRequested");
 const createUserFailed = createAction("users/createUserFailed");
+
+export const login =
+    ({ payload, redirect }) =>
+    async (dispatch) => {
+        const { email, password } = payload;
+        dispatch(authRequested());
+        try {
+            const data = await authService.login({ email, password });
+            dispatch(authRequestSuccess({ userId: data.localId }));
+            localStorageService.setTokens(data);
+            history.push(redirect);
+        } catch (error) {
+            dispatch(authRequestFailed(error.message));
+        }
+    };
 
 export const signUp =
     ({ email, password, ...rest }) =>
@@ -105,11 +123,16 @@ export const loadUsersList = () => async (dispatch, getState) => {
     }
 };
 
+export const getUsersList = () => (state) => state.users.entities;
+
 export const getUserById = (userId) => (state) => {
     if (state.users.entities) {
         return state.users.entities.find((u) => u._id === userId);
     }
 };
 
-export const getUsersList = () => (state) => state.users.entities;
+export const getIsLoggedIn = () => (state) => state.users.isLoggedIn;
+export const getDataStatus = () => (state) => state.users.dataLoaded;
+export const getCurrentUserId = () => (state) => state.users.auth.userId;
+
 export default usersReducer;
